@@ -1,0 +1,53 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace UserService.Api.Migrations
+{
+    /// <inheritdoc />
+    public partial class Initial : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "IntegrationEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Event = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
+                    Data = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IntegrationEvents", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "IntegrationEvents");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+        }
+    }
+}

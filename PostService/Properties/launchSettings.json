@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "PostService": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:63763;http://localhost:63764"
+    }
+  }
+}
