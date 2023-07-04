@@ -1,8 +1,7 @@
 ﻿using MassTransit;
+using RabbitMQ.Client;
 using System.Text;
 using UserService.Api.Context;
-
-///using RabbitMQ.Client;
 
 namespace UserService.Api.Services
 {
@@ -36,13 +35,13 @@ namespace UserService.Api.Services
         {
             try
             {
-                ///var factory = new ConnectionFactory();
-                ///var connection = factory.CreateConnection();
-                ///var channel = connection.CreateModel();
-                ///channel.ConfirmSelect(); // enable publisher confirms
-                ///IBasicProperties props = channel.CreateBasicProperties();
-                ///props.Persistent = true;
-                ///props.DeliveryMode = 2; // persist message
+                var factory = new ConnectionFactory();
+                var connection = factory.CreateConnection();
+                var channel = connection.CreateModel();
+                channel.ConfirmSelect(); // enable publisher confirms
+                IBasicProperties props = channel.CreateBasicProperties();
+                props.Persistent = true;
+                props.DeliveryMode = 2; // persist message
 
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -52,12 +51,12 @@ namespace UserService.Api.Services
                     foreach (var e in events)
                     {
                         var body = Encoding.UTF8.GetBytes(e.Data);
-                        ///channel.BasicPublish(exchange: "user",
-                        ///    routingKey: e.Event,
-                        ///    basicProperties: props,
-                        ///    body: body);
-                        ///channel.WaitForConfirmsOrDie(new TimeSpan(0, 0, 5)); // wait 5 seconds for publisher confirm
-                        await _publishEndpoint.Publish<byte[]>(body);
+                        channel.BasicPublish(exchange: "user",
+                            routingKey: e.Event,
+                            basicProperties: props,
+                            body: body);
+                        channel.WaitForConfirmsOrDie(new TimeSpan(0, 0, 5)); // wait 5 seconds for publisher confirm
+                        ///await _publishEndpoint.Publish<byte[]>(body);
                         Console.WriteLine("Published: " + e.Event + " " + e.Data);
                         dbContext.Remove(e);
                         dbContext.SaveChanges();

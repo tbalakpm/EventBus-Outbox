@@ -95,7 +95,7 @@ namespace PostService
                         ///{
                         user.Name = data["Name"].GetValue<string>();
                         user.Email = data["Email"].GetValue<string>();
-                        user.Version = user.Version + 1;///newVersion;
+                        user.Version++;    ///newVersion;
                         dbContext.SaveChanges();
                         ///}
                     }

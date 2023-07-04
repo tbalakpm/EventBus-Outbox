@@ -26,7 +26,7 @@ namespace UserService.Api
             builder.Services.AddDbContext<UserServiceContext>(options =>
                 options.UseSqlServer(@"Data Source=(local);Initial Catalog=Sales;User Id=sa;Password=tbm123;Encrypt=false"));
             builder.Services.AddSingleton<IntegrationEventSenderService>();
-            builder.Services.AddHostedService<IntegrationEventSenderService>(provider => provider.GetService<IntegrationEventSenderService>());
+            builder.Services.AddHostedService(provider => provider.GetService<IntegrationEventSenderService>()!);
 
             var app = builder.Build();
 
